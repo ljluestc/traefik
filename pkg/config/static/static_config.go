@@ -156,6 +156,7 @@ type API struct {
 	Dashboard          bool   `description:"Activate dashboard." json:"dashboard,omitempty" toml:"dashboard,omitempty" yaml:"dashboard,omitempty" export:"true"`
 	Debug              bool   `description:"Enable additional endpoints for debugging and profiling." json:"debug,omitempty" toml:"debug,omitempty" yaml:"debug,omitempty" export:"true"`
 	DisableDashboardAd bool   `description:"Disable ad in the dashboard." json:"disableDashboardAd,omitempty" toml:"disableDashboardAd,omitempty" yaml:"disableDashboardAd,omitempty" export:"true"`
+	LocalErrorPage     string `description:"Path to a custom error page to display for Traefik-generated errors." json:"localErrorPage,omitempty" toml:"localErrorPage,omitempty" yaml:"localErrorPage,omitempty" export:"true"`
 	// TODO: Re-enable statistics
 	// Statistics      *types.Statistics `description:"Enable more detailed statistics." json:"statistics,omitempty" toml:"statistics,omitempty" yaml:"statistics,omitempty" label:"allowEmpty" file:"allowEmpty" export:"true"`
 }
@@ -190,6 +191,7 @@ type ForwardingTimeouts struct {
 func (f *ForwardingTimeouts) SetDefaults() {
 	f.DialTimeout = ptypes.Duration(30 * time.Second)
 	f.IdleConnTimeout = ptypes.Duration(90 * time.Second)
+	LocalErrorPage string            `description:"Path to a custom error page to display for Traefik-generated errors" json:"localErrorPage,omitempty" toml:"localErrorPage,omitempty" yaml:"localErrorPage,omitempty" export:"true"`
 }
 
 // LifeCycle contains configurations relevant to the lifecycle (such as the shutdown phase) of Traefik.

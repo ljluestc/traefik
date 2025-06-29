@@ -126,7 +126,37 @@ func (h Handler) getRuntimeConfiguration(rw http.ResponseWriter, request *http.R
 			ServerStatus: v.GetAllStatus(),
 		}
 	}
+package api
 
+import (
+	"net/http"
+
+	"github.com/gorilla/mux"
+)
+
+// Handler exposes the Traefik API
+type Handler struct {
+	// Configuration fields would go here
+}
+
+// CreateRouter creates a new router for the API
+func (h *Handler) CreateRouter() *mux.Router {
+	router := mux.NewRouter()
+	
+	// Register the routes
+	router.Methods(http.MethodGet).Path("/api/health").HandlerFunc(h.getHealthHandler)
+	router.Methods(http.MethodGet).Path("/api/health/errors").HandlerFunc(GetHealthErrorsHandler())
+	
+	// Apply middleware
+	router.Use(ErrorLoggerMiddleware)
+	
+	return router
+}
+
+// getHealthHandler returns the health status of Traefik
+func (h *Handler) getHealthHandler(rw http.ResponseWriter, req *http.Request) {
+	// Health handler implementation
+}
 	result := RunTimeRepresentation{
 		Routers:        h.runtimeConfiguration.Routers,
 		Middlewares:    h.runtimeConfiguration.Middlewares,
